@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public abstract class Utilisateur {
 
 	@Id
-	@GeneratedValue()
+	@GeneratedValue
 	private Integer id;
 	
 	@Column(length = 255, nullable = false)
