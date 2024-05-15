@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Employe extends Utilisateur {
-    @Column
+    @Column(nullable = false)
     private Boolean estAdmin;
 }
