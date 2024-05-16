@@ -14,23 +14,25 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(of = "id")
 @Entity
 public class Exemplaire {
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
 
-    @Column(nullable = false, unique = true)
-    private String codeBarre;
-    
+	@Column(nullable = false, unique = true)
+	private String codeBarre;
 
-    @Column(nullable = false)
-    private Boolean estLouable;
-    
-    @ManyToOne
-    @JoinColumn(name = "id_modele")
-    private Modele modele;
+	@Column(nullable = false)
+	private Boolean estLouable;
+
+	@ManyToOne
+	@JoinColumn(name = "id_modele", nullable = true)
+	private Modele modele;
+
+	@ManyToOne
+	@JoinColumn(name = "id_reservation", nullable = true)
+	private Reservation reservation;
 }
