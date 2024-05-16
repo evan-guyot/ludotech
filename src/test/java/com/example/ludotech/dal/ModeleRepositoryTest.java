@@ -2,6 +2,8 @@ package com.example.ludotech.dal;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +59,29 @@ class ModeleRepositoryTest {
 		
 		assertThat(modeleCree.getId()).isNotNull();
 		
+	}
+
+	@Test
+	@DisplayName("Test modification d'un modele")
+	void testUpdateName() {
+		//Arrange		
+		final String ORIGINAL_NAME = "Le farfadet malicieux";
+		final String MODIFIED_NAME = "Le farfadet malicieux mange des enfants";
+		
+		Modele modele = Modele.builder()
+						.nom(ORIGINAL_NAME)
+						.prixLocation(2.0f)
+						.build();
+		
+		//Act		
+		Modele modeleCree = repo.save(modele);
+		
+		modeleCree.setNom(MODIFIED_NAME);
+		
+		Modele modeleModifie = repo.save(modeleCree);
+		
+		//Assert
+		assertEquals(modeleCree.getId(), modeleModifie.getId());
+		assertEquals(modeleModifie.getNom(), MODIFIED_NAME);
 	}
 }
