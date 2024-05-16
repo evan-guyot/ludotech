@@ -1,9 +1,14 @@
 package com.example.ludotech.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +27,8 @@ public class Client extends Utilisateur {
     
     @OneToOne(mappedBy = "client", optional = true)
     private Adresse adresse;
+    
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<>();
+
 }
