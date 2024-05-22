@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.ludotech.bo.Client;
 import com.example.ludotech.bo.Exemplaire;
@@ -15,6 +16,7 @@ import com.example.ludotech.dal.ExemplaireRepository;
 import com.example.ludotech.dal.ModeleRepository;
 import com.example.ludotech.dal.ReservationRepository;
 
+@Service
 public class ExemplaireServiceImpl implements ExemplaireService {
    
 	@Autowired
@@ -32,6 +34,8 @@ public class ExemplaireServiceImpl implements ExemplaireService {
 	
 	@Override
 	public List<Exemplaire> ReserverExemplaire(Integer clientId, List<Integer> listModeleId) throws Exception {
+
+		
 		if(listModeleId.size() > 3) {
 			throw new Exception("Vous ne pouvez pas réserver plus de 3 exemplaires à la fois");
 		}
@@ -50,9 +54,11 @@ public class ExemplaireServiceImpl implements ExemplaireService {
 				.dateReservation(new Date())
 				.build();
 		
+		
 		for(Integer modeleId : listModeleId) {
 			if(modeleRepository.findById(clientId).isPresent()) {
-				Integer idReserve = exemplaireRepository.getReservableExemplaireByModeleId(modeleId);
+				Integer idReserve = exemplaireRepository.getReservableExemplaireByModeleId(modeleId).get(0);
+
 				
 				if(idReserve != null) {
 					
@@ -69,6 +75,8 @@ public class ExemplaireServiceImpl implements ExemplaireService {
 				throw new Exception("Modele non trouvé : " + modeleId);				
 			}
 		}
+
+
 
 		reservation.setExemplaires(exemplaires);
 		
