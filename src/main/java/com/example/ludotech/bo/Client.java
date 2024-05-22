@@ -15,22 +15,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Builder
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Client extends Utilisateur {
+
     @Column(length = 255, nullable = false)
     private String telephone;
-    
+
     @OneToOne(mappedBy = "client", optional = true)
     private Adresse adresse;
-    
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Reservation> reservations = new ArrayList<>();
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 }

@@ -23,53 +23,53 @@ import com.example.ludotech.dal.ReservationRepository;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class ReservationRepositoryTest {
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+	@Autowired
+	private ReservationRepository reservationRepository;
 
-    @Autowired
-    private TestEntityManager entityManager;
+	@Autowired
+	private TestEntityManager entityManager;
 
-    @Test
-    @DisplayName("Test ajout d'une réservation")
-    void testSave() {
-        // Arrange
-        Client client = new Client();
-        client.setNom("Doe");
-        client.setPrenom("John");
-        client.setTelephone("0123456789");
-        entityManager.persist(client);
+	@Test
+	@DisplayName("Test ajout d'une réservation")
+	void testSave() {
+		// Arrange
+		Client client = new Client();
+		client.setNom("Doe");
+		client.setPrenom("John");
+		client.setTelephone("0123456789");
+		entityManager.persist(client);
 
-        Reservation reservation = new Reservation();
-        reservation.setDateReservation(new Date());
-        reservation.setClient(client);
+		Reservation reservation = new Reservation();
+		reservation.setDateReservation(new Date());
+		reservation.setClient(client);
 
-        // Act
-        Reservation savedReservation = reservationRepository.save(reservation);
+		// Act
+		Reservation savedReservation = reservationRepository.save(reservation);
 
-        // Assert
-        assertThat(savedReservation.getId()).isNotNull();
-    }
+		// Assert
+		assertThat(savedReservation.getId()).isNotNull();
+	}
 
-    @Test
-    @DisplayName("Test recherche d'une réservation par ID")
-    void testFindById() {
-        // Arrange
-        Client client = new Client();
-        client.setNom("Doe");
-        client.setPrenom("John");
-        client.setTelephone("0123456789");
-        entityManager.persist(client);
+	@Test
+	@DisplayName("Test recherche d'une réservation par ID")
+	void testFindById() {
+		// Arrange
+		Client client = new Client();
+		client.setNom("Doe");
+		client.setPrenom("John");
+		client.setTelephone("0123456789");
+		entityManager.persist(client);
 
-        Reservation reservation = new Reservation();
-        reservation.setDateReservation(new Date());
-        reservation.setClient(client);
-        entityManager.persist(reservation);
+		Reservation reservation = new Reservation();
+		reservation.setDateReservation(new Date());
+		reservation.setClient(client);
+		entityManager.persist(reservation);
 
-        // Act
-        Optional<Reservation> foundReservation = reservationRepository.findById(reservation.getId());
+		// Act
+		Optional<Reservation> foundReservation = reservationRepository.findById(reservation.getId());
 
-        // Assert
-        assertTrue(foundReservation.isPresent());
-        assertEquals(reservation, foundReservation.get());
-    }
+		// Assert
+		assertTrue(foundReservation.isPresent());
+		assertEquals(reservation, foundReservation.get());
+	}
 }
